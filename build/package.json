@@ -2,8 +2,7 @@
     "name": "341policeapi",
     "version": "1.0.0",
     "description": "",
-    "exports": "./src/server.ts",
-    "type": "module",
+    "main": "src/server.ts",
     "scripts": {
         "build": "rm -rf build/ && tsc",
         "start": "nodemon build/src/server.js"

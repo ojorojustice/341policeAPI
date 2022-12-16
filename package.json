@@ -2,14 +2,11 @@
     "name": "341policeapi",
     "version": "1.0.0",
     "description": "",
-    "type": "module",
-    "exports": "./src/index.js",
-    "engines": {
-        "node": " >=14.13.1 || >=16.0.0"
-    },
+    "main": "src/server.ts",
+    
     "scripts": {
-        "build": "rm -rf build/src/ && tsc",
-        "start": "node build/src/server.js"
+        "build": "rm -rf build/ && tsc",
+        "start": "nodemon build/src/server.js"
     },
     "repository": {
         "type": "git",

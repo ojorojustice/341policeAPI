@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
-
+import mongoose from 'mongoose'
 dotenv.config();
+
+mongoose.set('strictQuery', false);
 
 const MONGO_USERNAME = process.env.MONGO_USERNAME || '';
 const MONGO_PASSWORD = process.env.MONGO_PASSWORD || '';

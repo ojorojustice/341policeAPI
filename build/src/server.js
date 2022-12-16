@@ -1,30 +1,28 @@
-'use strict';
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
-Object.defineProperty(exports, '__esModule', { value: true });
-const express_1 = __importDefault(require('express'));
-const http_1 = __importDefault(require('http'));
-const mongoose_1 = __importDefault(require('mongoose'));
-import { config } from './config/config';
-const Logging_1 = __importDefault(require('./library/Logging'));
-const Police_1 = __importDefault(require('./routes/Police'));
-const Stations_1 = __importDefault(require('./routes/Stations'));
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const http_1 = __importDefault(require("http"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const config_1 = require("./config/config");
+const Logging_1 = __importDefault(require("./library/Logging"));
+const Police_1 = __importDefault(require("./routes/Police"));
+const Stations_1 = __importDefault(require("./routes/Stations"));
 //import swaggerDocument from './swagger.json'
 const router = (0, express_1.default)();
 /**Connect to mongo */
 mongoose_1.default
-    .connect(config.mongo.url, { retryWrites: true, w: 'majority' })
+    .connect(config_1.config.mongo.url, { retryWrites: true, w: 'majority' })
     .then(() => {
-        Logging_1.default.info('connected to mongodb');
-        StartServer();
-    })
+    Logging_1.default.info('connected to mongodb');
+    StartServer();
+})
     .catch((error) => {
-        Logging_1.default.error('unable to connect');
-        Logging_1.default.error(error.message);
-    });
+    Logging_1.default.error('unable to connect');
+    Logging_1.default.error(error.message);
+});
 /**Only start the server if Mongo connects */
 const StartServer = () => {
     router.use((req, res, next) => {
@@ -55,7 +53,7 @@ const StartServer = () => {
         Logging_1.default.error(error);
         return res.status(404).json({ message: error.message });
     });
-    http_1.default.createServer(router).listen(config.server.port, () => {
-        Logging_1.default.info(`server is running on port ${config.server.port}`);
+    http_1.default.createServer(router).listen(config_1.config.server.port, () => {
+        Logging_1.default.info(`server is running on port ${config_1.config.server.port}`);
     });
 };

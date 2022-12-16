@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Stations from '../models/Stations';
 
-const createStation = (req: Request, res: Response, next: NextFunction) => {
+const createStation = async (req: Request, res: Response, next: NextFunction) => {
     const { location, phone, police } = req.body;
 
     const station = new Stations({
@@ -12,31 +12,35 @@ const createStation = (req: Request, res: Response, next: NextFunction) => {
         police
     });
 
-    return station
-        .save()
-        .then((station) => {
-            res.status(201).json({ station });
-        })
-        .catch((error) => {
-            res.status(404).json({ error });
-        });
+    try {
+        const station_1 = await station.save();
+        res.status(201).json({ station });
+    } catch (error) {
+        res.status(404).json({ error });
+    }
 };
 
-const getStation = (req: Request, res: Response, next: NextFunction) => {
+const getStation = async (req: Request, res: Response, next: NextFunction) => {
     const stationId = req.params.stationId;
 
-    return Stations.findById(stationId)
-        .then((station) => (station ? res.status(201).json({ station }) : res.status(404).json({ message: 'Not found' })))
-        .catch((error) => res.status(500).json({ error }));
+    try {
+        const station = await Stations.findById(stationId);
+        return station ? res.status(201).json({ station }) : res.status(404).json({ message: 'Not found' });
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
 };
 
-const getAllStation = (req: Request, res: Response, next: NextFunction) => {
-    return Stations.find()
-        .then((policeStation) => res.status(201).json({ policeStation }))
-        .catch((error) => res.status(500).json({ error }));
+const getAllStation = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const policeStation = await Stations.find();
+        return res.status(201).json({ policeStation });
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
 };
 
-const updateStation = (req: Request, res: Response, next: NextFunction) => {
+const updateStation = async (req: Request, res: Response, next: NextFunction) => {
     const stationId = req.params.stationId;
 
     return Stations.findById(stationId)
@@ -57,7 +61,7 @@ const updateStation = (req: Request, res: Response, next: NextFunction) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
-const deleteStation = (req: Request, res: Response, next: NextFunction) => {
+const deleteStation = async (req: Request, res: Response, next: NextFunction) => {
     const stationId = req.params.stationId;
 
     return Stations.findByIdAndDelete(stationId)

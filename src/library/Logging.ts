@@ -10,3 +10,5 @@ export default class Logging {
     public static error = (args: any) => console.log(chalk.red(`[${new Date().toLocaleString()}][INFO]`), typeof args === 'string' ? chalk.blueBright(args) : args);
 }
 
+
+

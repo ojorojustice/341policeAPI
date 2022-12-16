@@ -3,6 +3,10 @@ import http from 'http';
 import mongoose from 'mongoose';
 import { config } from './config/config';
 import Logging from './library/Logging';
+import policeRoutes from './routes/Police';
+import stationRoutes from './routes/Stations';
+import swaggerui from 'swagger-ui-express';
+//import swaggerDocument from './swagger.json'
 
 const router = express();
 
@@ -43,6 +47,10 @@ const StartServer = () => {
         }
         next();
     });
+
+    router.use('/policeAPI', policeRoutes);
+    router.use('/stationAPI', stationRoutes);
+    
 
     router.get('/check', (req, res, next) => {
         res.status(200).json({ message: 'checked' });

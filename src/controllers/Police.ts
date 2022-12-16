@@ -3,11 +3,16 @@ import mongoose from 'mongoose';
 import Police from '../models/Police';
 
 const createPolice = (req: Request, res: Response, next: NextFunction) => {
-    const { name } = req.body;
+    const { name,age,gender,stars,phone,station } = req.body;
 
     const police = new Police({
         _id: new mongoose.Types.ObjectId(),
-        name
+        name,
+        age,
+        gender,
+        stars,
+        phone,
+        station
     });
 
     return police
@@ -62,3 +67,5 @@ const deletePolice = (req: Request, res: Response, next: NextFunction) => {
         .then((police) => (police ? res.status(201).json({ message: 'police deleted' }) : res.status(404).json({ message: 'Not deleted' })))
         .catch((error) => res.status(500).json({ error }));
 };
+
+export default { getPolice, getAllPolice, updatePolice, deletePolice, createPolice };

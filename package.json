@@ -3,10 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "main": "src/server.ts",
-    
     "scripts": {
-        "build": "rm -rf build/ && tsc",
-        "start": "nodemon build/src/server.js"
+        "build": "rm -rf build/src/ && tsc",
+        "start": "node build/src/server.js"
     },
     "repository": {
         "type": "git",
